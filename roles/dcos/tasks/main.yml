@@ -1,18 +1,33 @@
 ---
+- name: copy dcos installation package
+  s3:
+    bucket: ztwoi-dcos-install
+    object: dcos_install.tar
+    dest: /tmp/dcos_install.tar
+    aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY') }}"
+    aws_secret_key: "{{ lookup('env', 'AWS_SECRET_KEY') }}"
+    mode: get
+
+
 - name: create dcos temp install directory
   file:
     path: /opt/dcos_install_tmp
     state: directory
 
 
-- name: copy dcos installation package
+- name: unarchive dcos install bundle
   unarchive:
-    src: dcos_install.tar
+    src: /tmp/dcos_install.tar
     dest: /opt/dcos_install_tmp
+    remote_src: True
 
+- name: remove dcos archive bundle
+  file:
+    state: absent
+    path: /tmp/dcos_install.tar
 
 - name: install dcos 
-  shell: bash /etc/dcos_install_tmp/dcos_install.sh {{ dcos_node_type }}
+  shell: bash /opt/dcos_install_tmp/dcos_install.sh {{ dcos_node_type }}
   async: 0
 
 

@@ -1,0 +1,8 @@
+{
+    "name": "calico",
+    "type": "calico",
+    "etcd_endpoints": "http://{{ dcos_master1 }}:2379",
+    "ipam": {
+        "type": "calico-ipam"
+    }
+}

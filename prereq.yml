@@ -10,8 +10,8 @@
     dcos_node_type: master
   roles:
     # - common
-    # - etcd
+    - etcd
     # - docker
     # - reboot
-    - dcos
-    # - calico
+    # - dcos
+    - calico

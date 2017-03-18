@@ -4,6 +4,15 @@
   with_items:
     - etcd
 
+
+- name: bind etcd to internal ip address
+  replace:
+    dest: /etc/etcd/etcd.conf
+    regexp: 'localhost'
+    replace: '{{ ansible_default_ipv4.address  }}'
+  notify:
+    - restart etcd
+
 - name: start etcd
   systemd:
    daemon_reload: yes

@@ -1,4 +1,7 @@
 ---
+secrets_dir: /projects/docker_apps/ansible/secrets
 ansible_user: centos
-ansible_ssh_private_key_file: ~/.ssh/ztwoikey.pem
+ansible_ssh_private_key_file: "{{ secrets_dir  }}/ssh/ztwoikey.pem"
+calicoctl_version: v1.0.0
+calico_version: v1.6.0
 

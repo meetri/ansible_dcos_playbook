@@ -34,12 +34,8 @@
 
 - name: copy docker ssl certificates
   copy:
-    src: "ssl/{{ item }}"
-    dest: /etc/docker/ssl/
-  with_items:
-    - ca.pem
-    - cert.pem
-    - key.pem
+    src: "{{ secrets_dir }}/docker/ssl"
+    dest: /etc/docker
 
 
 - name: install docker-ce

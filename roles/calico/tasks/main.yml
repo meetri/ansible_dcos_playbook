@@ -1,0 +1,59 @@
+---
+- name: set calico config
+  template:
+    src: calico.cni 
+    dest: /opt/mesosphere/etc/dcos/network/cni
+
+
+- name: get calico ipam cni drivers
+  get_url:
+    url: https://github.com/projectcalico/cni-plugin/releases/download/{{ calico_version }}/calico-ipam
+    dest: /opt/mesosphere/active/cni/
+    mode: "a+x"
+
+
+- name: get calico cni drivers
+  get_url:
+    url: https://github.com/projectcalico/cni-plugin/releases/download/{{ calico_version }}/calico
+    dest: /opt/mesosphere/active/cni/
+    mode: "a+x"
+
+
+- name: get calicoctl binary
+  get_url:
+    url: https://github.com/projectcalico/calicoctl/releases/download/{{ calicoctl_version }}/calicoctl
+    dest: /opt/mesosphere/active/cni/
+    mode: "a+x"
+
+
+- name: make calico settings directory
+  file:
+    path: /etc/calico
+    state: directory
+
+
+- name: copy calico settings
+  template:
+    src: calico.env 
+    dest: /etc/calico/calico.env
+
+
+- name: copy calicoctl settings
+  template:
+    src: calicoctl.cfg
+    dest: /etc/calico/calicoctl.cfg
+  
+
+- name: copy calico systemd service
+  copy:
+    src: calico-node.service
+    dest: /etc/systemd/system/
+    mode: "a+x"
+  
+
+- name: start calico-node
+  systemd:
+    name: calico-node.service
+    daemon_reload: yes
+    enabled: yes
+    state: started
