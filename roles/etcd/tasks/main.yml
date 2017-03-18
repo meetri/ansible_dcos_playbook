@@ -1,0 +1,12 @@
+---
+- name: install etcd
+  yum: name={{ item }} state=present
+  with_items:
+    - etcd
+
+- name: start etcd
+  systemd:
+   daemon_reload: yes
+   name: etcd.service
+   state: started
+   enabled: yes

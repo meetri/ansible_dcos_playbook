@@ -1,0 +1,17 @@
+---
+- name: Install DC/OS Pre-requisites
+  hosts: dcos-new-master
+  remote_user: root
+  become: yes
+  become_method: sudo
+  vars:
+    etc_server: 10.20.50.22:2379
+    dcos_master1: 10.20.50.22
+    dcos_node_type: master
+  roles:
+    # - common
+    # - etcd
+    # - docker
+    # - reboot
+    - dcos
+    # - calico

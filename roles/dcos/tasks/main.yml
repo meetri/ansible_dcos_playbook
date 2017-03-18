@@ -1,0 +1,18 @@
+---
+- name: create dcos temp install directory
+  file:
+    path: /opt/dcos_install_tmp
+    state: directory
+
+
+- name: copy dcos installation package
+  unarchive:
+    src: dcos_install.tar
+    dest: /opt/dcos_install_tmp
+
+
+- name: install dcos 
+  shell: bash /etc/dcos_install_tmp/dcos_install.sh {{ dcos_node_type }}
+  async: 0
+
+

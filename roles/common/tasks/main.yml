@@ -1,0 +1,37 @@
+---
+- name: test a variable
+  debug: var=inventory_hostname,ansible_hostname,ansible_host,ansible_ssh_host
+
+
+- name: upgrade all packages
+  yum: 
+    name: '*'
+    state: latest
+
+
+- name: install dcos pre-requisites
+  yum: name={{ item }} state=present
+  with_items:
+    - unzip
+    - ipset
+    - epel-release
+
+- name: install jq
+  yum: name={{ item }} state=present
+  with_items:
+    - jq
+
+- name: set selinux to permissive mode
+  replace:
+    dest: /etc/selinux/config
+    regexp: '^SELINUX=enforcing'
+    replace: 'SELINUX=permissive'
+  notify:
+    - restart server
+    - wait for server to restart
+
+
+- name: create new group
+  group:
+    name: nogroup
+    state: present

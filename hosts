@@ -1,0 +1,15 @@
+[dcos-new-master]
+52.91.166.144
+
+[dcos-master]
+54.152.14.115
+
+[dcos-agent]
+54.161.231.116
+54.152.215.242
+
+[dcos-public-agent]
+54.92.182.44
+
+[dcos-bootstrap]
+52.23.226.129

@@ -1,0 +1,16 @@
+---
+bootstrap_url: file:///opt/dcos_install_tmp
+cluster_name: ztwoiAWS-East1
+exhibitor_storage_backend: static
+ip_detect_path: genconf/ip-detect
+master_discovery: static
+master_list:
+- {{ dcos_master1 }}
+resolvers:
+- 8.8.8.8
+- 8.8.4.4
+ssh_key_path: genconf/ssh_key
+ssh_port: 22
+ssh_user: centos
+telemetry_enabled: false
+dcos_overlay_enable: false
