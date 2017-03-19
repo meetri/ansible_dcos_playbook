@@ -26,15 +26,11 @@
     state: absent
     path: /tmp/dcos_install.tar
 
+#TODO: remove...
 - name: create dcos dir
   file:
     path: /var/lib/dcos
     state: directory
-
-- name: apply node attributes
-  template:
-    src: mesos-slave-common 
-    dest: /var/lib/dcos/
 
 
 - name: install dcos 
@@ -42,3 +38,29 @@
   async: 0
 
 
+- name: apply node attributes
+  template:
+    src: mesos-slave-common 
+    dest: /var/lib/dcos/
+
+
+- name: apply node attributes
+  replace:
+    dest: /opt/mesosphere/etc/adminrouter-listen-open.conf
+    regexp: '^ssl_certificate (.*)$'
+    replace: 'ssl_certificate /etc/docker/ssl/cert.pem'
+  notify:
+    - restart admin router
+
+
+- name: apply node attributes
+  replace:
+    dest: /opt/mesosphere/etc/adminrouter-listen-open.conf
+    regexp: '^ssl_certificate_key(.*)$'
+    replace: 'ssl_certificate_key /etc/docker/ssl/key.pem'
+  notify:
+    - restart admin router
+
+
+- name: trigger dcos handlers
+  meta: flush_handlers

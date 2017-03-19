@@ -11,4 +11,5 @@
     - dcos
     - calico
     - { role: calico-network, when: "dcos_node_type == 'master'"}
+    - { role: dcos-secure, when: "dcos_node_type == 'master'"}
 

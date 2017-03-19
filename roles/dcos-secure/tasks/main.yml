@@ -1,0 +1,21 @@
+---
+- name: add ssl certificate
+  replace:
+    dest: /opt/mesosphere/etc/adminrouter-listen-open.conf
+    regexp: '^ssl_certificate (.*)$'
+    replace: 'ssl_certificate /etc/docker/ssl/cert.pem;'
+  notify:
+    - restart admin router
+
+
+- name: add ssl key
+  replace:
+    dest: /opt/mesosphere/etc/adminrouter-listen-open.conf
+    regexp: '^ssl_certificate_key(.*)$'
+    replace: 'ssl_certificate_key /etc/docker/ssl/key.pem;'
+  notify:
+    - restart admin router
+
+
+- name: trigger dcos handlers
+  meta: flush_handlers
