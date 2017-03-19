@@ -1,2 +1,3 @@
 ---
 dcos_node_type: slave
+node_attributes: shared_mnt:true

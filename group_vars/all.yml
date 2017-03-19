@@ -2,8 +2,6 @@
 # move this to vault...
 secrets_dir: /projects/docker_apps/ansible/secrets
 
-node_attributes: shared_mnt:true
-
 ansible_user: centos
 ansible_ssh_private_key_file: "{{ secrets_dir  }}/ssh/ztwoikey.pem"
 calicoctl_version: v1.0.0
