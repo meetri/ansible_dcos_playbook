@@ -4,8 +4,15 @@
   with_items:
     - etcd
 
-
 - name: bind etcd to internal ip address
+  replace:
+    dest: /etc/etcd/etcd.conf
+    regexp: "^ETCD_LISTEN_CLIENT_URLS=(.*)$"
+    replace: 'ETCD_LISTEN_CLIENT_URLS="http://0.0.0.0:2379"'
+  notify:
+    - restart etcd
+
+- name: set etcd advertise urls
   replace:
     dest: /etc/etcd/etcd.conf
     regexp: 'localhost'
@@ -19,3 +26,5 @@
    name: etcd.service
    state: started
    enabled: yes
+
+- meta: flush_handlers 

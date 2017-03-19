@@ -1,6 +1,6 @@
 ---
 - name: test a variable
-  debug: var=inventory_hostname,ansible_hostname,ansible_host,ansible_ssh_host
+  debug: var=inventory_hostname
 
 
 - name: upgrade all packages
@@ -16,22 +16,55 @@
     - ipset
     - epel-release
 
+
 - name: install jq
   yum: name={{ item }} state=present
   with_items:
     - jq
+
 
 - name: set selinux to permissive mode
   replace:
     dest: /etc/selinux/config
     regexp: '^SELINUX=enforcing'
     replace: 'SELINUX=permissive'
-  notify:
-    - restart server
-    - wait for server to restart
+  register: restart_and_wait
+
+
+- name: test a variable
+  debug: var=restart_and_wait
+
+
+- name: restart server
+  shell: sleep 5 && shutdown -r now "Reboot triggered by Ansible"
+  when: restart_and_wait.changed
+  async: 1
+  poll: 0
+  ignore_errors: true
+
+
+- name: wait for server to restart
+  wait_for_connection:
+    timeout: 200
+    delay: 15
+  when: restart_and_wait.changed
 
 
 - name: create new group
   group:
     name: nogroup
     state: present
+
+
+- name: add directory for shared mount
+  file:
+    path: /mnt/shared_data
+    state: directory
+
+
+- name: add nfs mount to fstab
+  lineinfile:
+    path: /etc/fstab
+    line: "{{ nfs_url }}:/ /mnt/shared_data nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0"
+
+

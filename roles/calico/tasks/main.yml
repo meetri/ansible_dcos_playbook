@@ -22,7 +22,7 @@
 - name: get calicoctl binary
   get_url:
     url: https://github.com/projectcalico/calicoctl/releases/download/{{ calicoctl_version }}/calicoctl
-    dest: /opt/mesosphere/active/cni/
+    dest: /usr/bin/
     mode: "a+x"
 
 

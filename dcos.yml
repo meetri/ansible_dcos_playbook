@@ -1,0 +1,13 @@
+---
+- name: Install DC/OS to cluster
+  hosts: dcos-master,dcos-public,dcos-private
+  remote_user: root
+  become: yes
+  become_method: sudo
+  roles:
+    - common
+    - { role: etcd, when: "dcos_node_type == 'master'"}
+    - docker
+    - dcos
+    - calico
+

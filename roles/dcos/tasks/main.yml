@@ -26,6 +26,13 @@
     state: absent
     path: /tmp/dcos_install.tar
 
+
+- name: apply node attributes
+  template:
+    src: mesos-slave-common 
+    dest: /var/lib/dcos/
+
+
 - name: install dcos 
   shell: bash /opt/dcos_install_tmp/dcos_install.sh {{ dcos_node_type }}
   async: 0
