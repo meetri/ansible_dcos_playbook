@@ -59,6 +59,3 @@
     value: 1
     state: present
     sysctl_set: yes
-  notify:
-    - restart server
-    - wait for server to restart

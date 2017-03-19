@@ -26,6 +26,10 @@
     state: absent
     path: /tmp/dcos_install.tar
 
+- name: create dcos dir
+  file:
+    path: /var/lib/dcos
+    state: directory
 
 - name: apply node attributes
   template:
