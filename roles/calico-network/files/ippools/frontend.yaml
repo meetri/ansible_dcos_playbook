@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ipPool
+metadata:
+  cidr: 172.16.110.0/24
+spec:
+  ipip:
+    enabled: false
+  nat-outgoing: true

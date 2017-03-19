@@ -1,0 +1,41 @@
+---
+- name: create calico ippools 
+  file:
+    path: /opt/configs/
+    state: directory
+
+
+- name: add calico network driver to docker
+  copy: 
+    src: ippools
+    dest: /opt/configs/
+
+
+- name: add calico frontend network ip pool
+  command: calicoctl apply -f /opt/configs/ippools/frontend.yaml
+
+
+- name: add calico backend network ip pool
+  command: calicoctl apply -f /opt/configs/ippools/backend.yaml
+
+
+
+- name: add calico frontend docker network
+  docker_network:
+    name: backend
+    driver: calico
+    ipam_driver: calico-ipam
+    ipam_options:
+      subnet: '172.16.100.0/24'
+    state: present
+
+
+- name: add calico frontend docker network
+  docker_network:
+    name: frontend
+    driver: calico
+    ipam_driver: calico-ipam
+    ipam_options:
+      subnet: '172.16.110.0/24'
+    state: present
+

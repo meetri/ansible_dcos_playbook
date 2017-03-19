@@ -10,4 +10,5 @@
     - docker
     - dcos
     - calico
+    - { role: calico-network, when: "dcos_node_type == 'master'"}
 

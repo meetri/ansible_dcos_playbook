@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: policy
+metadata:
+  name: allow-healthchecks
+spec:
+  selector: all()
+  ingress:
+  - action: allow 
+    protocol: tcp
+    source:
+      net: 10.71.0.0/16
+    destination:
+      net: 172.16.0.0/16
+
+  - action: allow 
+    protocol: icmp
+    source:
+      net: 10.71.0.0/16
+    destination:
+      net: 172.16.0.0/16
+
+  egress:
+  - action: allow

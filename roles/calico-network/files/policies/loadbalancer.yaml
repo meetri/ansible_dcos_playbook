@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: policy
+metadata:
+  name: minuteman-lb-policy
+spec:
+  selector: all()
+  ingress:
+  - action: allow 
+    protocol: tcp
+    source:
+      net: 0.0.0.0/0
+    destination:
+      net: 172.16.0.0/16
+  - action: allow 
+    protocol: icmp
+    source:
+      net: 0.0.0.0/0
+    destination:
+      net: 172.16.0.0/16
+  egress:
+  - action: allow

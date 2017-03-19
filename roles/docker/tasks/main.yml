@@ -1,7 +1,14 @@
 ---
 - name: yum-utils
-  yum:
-    name: yum-utils
+  yum: name={{ item }} state=present
+  with_items:
+    - yum-utils
+    - python2-pip
+
+
+- name: install docker plugin
+  pip:
+    name: docker-py
     state: present
 
 
