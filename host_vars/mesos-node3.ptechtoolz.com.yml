@@ -1,4 +1,4 @@
 ---
 mount_snapshot: "snap-0cb8af6fd6a5c44e4"
-volume_name: "LTS Data 3-2016"
+volume_name: "LTS Data 3-2017"
 node_attributes: lts_data:true;shared_data:true
