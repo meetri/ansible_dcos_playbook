@@ -1,0 +1,8 @@
+---
+- name: get ec2 details
+  ec2_facts:
+
+- name: test a variable
+  debug: var=ansible_ec2_placement_availability_zone[0:-1]
+
+

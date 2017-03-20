@@ -1,0 +1,11 @@
+---
+- name: restart server
+  shell: sleep 5 && shutdown -r now "Reboot triggered by Ansible"
+  async: 1
+  poll: 0
+  ignore_errors: true
+
+- name: wait for server to restart
+  wait_for_connection:
+    timeout: 200
+    delay: 15
