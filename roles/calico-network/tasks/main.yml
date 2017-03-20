@@ -10,6 +10,10 @@
     src: ippools
     dest: /opt/configs/
 
+- name: copy calico policies configurations
+  copy: 
+    src: policies
+    dest: /opt/configs/
 
 - name: add calico frontend network ip pool
   command: calicoctl apply -f /opt/configs/ippools/frontend.yaml

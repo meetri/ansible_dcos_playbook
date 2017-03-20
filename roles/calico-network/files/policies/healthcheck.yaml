@@ -8,14 +8,14 @@ spec:
   - action: allow 
     protocol: tcp
     source:
-      net: 10.71.0.0/16
+      net: 10.20.0.0/16
     destination:
       net: 172.16.0.0/16
 
   - action: allow 
     protocol: icmp
     source:
-      net: 10.71.0.0/16
+      net: 10.20.0.0/16
     destination:
       net: 172.16.0.0/16
 
