@@ -45,7 +45,7 @@
   
 
 - name: copy calico systemd service
-  copy:
+  template:
     src: calico-node.service
     dest: /etc/systemd/system/
     mode: "a+x"

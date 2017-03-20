@@ -12,4 +12,5 @@
     - calico
     - { role: calico-network, when: "dcos_node_type == 'master'"}
     - { role: dcos-secure, when: "dcos_node_type == 'master'"}
+    - { role: vol-mount, when: mount_snapshot is defined }
 

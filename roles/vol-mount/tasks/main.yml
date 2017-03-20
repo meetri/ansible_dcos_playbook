@@ -1,0 +1,26 @@
+---
+- name: test a variable
+  debug: var=inventory_hostname
+
+
+- name: create volume from snapshot
+  ec2_vol:
+    aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY') }}"
+    aws_secret_key: "{{ lookup('env', 'AWS_SECRET_KEY') }}"
+    encrypted: no
+    device_name: /dev/sdf
+    snapshot: "{{ mount_snapshot }}"
+    volume_type: gp2
+    state: present
+    instance: "{{ instance_id }}"
+    region: "{{ region }}"
+    tags: 
+      Name: "{{ volume_name }}"
+
+
+- name: mount new volumne
+  mount:
+    path: /mnt/data
+    src: /dev/xvdf
+    fstype: ext4
+    state: mounted

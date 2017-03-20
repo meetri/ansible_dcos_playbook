@@ -5,7 +5,7 @@
     state: directory
 
 
-- name: add calico network driver to docker
+- name: copy calico ippools configurations
   copy: 
     src: ippools
     dest: /opt/configs/
@@ -17,7 +17,6 @@
 
 - name: add calico backend network ip pool
   command: calicoctl apply -f /opt/configs/ippools/backend.yaml
-
 
 
 - name: add calico frontend docker network

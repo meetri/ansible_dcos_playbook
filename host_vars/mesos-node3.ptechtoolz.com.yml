@@ -1,0 +1,5 @@
+---
+mount_snapshot: "snap-0cb8af6fd6a5c44e4"
+instance_id: "i-0243d0ad59f23af0f"
+region: "us-east-1"
+volume_name: "LTS Data 3-2016"

@@ -1,0 +1,9 @@
+---
+- name: Add ebs volume to ec2 node
+  hosts: all
+  remote_user: root
+  become: yes
+  become_method: sudo
+  roles:
+    - { role: vol-mount, when: mount_snapshot is defined }
+
