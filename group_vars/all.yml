@@ -1,6 +1,6 @@
 ---
 # move this to vault...
-secrets_dir: /projects/docker_apps/secrets
+secrets_dir: ../secrets
 
 ansible_user: centos
 ansible_ssh_private_key_file: "{{ secrets_dir  }}/ssh/ztwoikey.pem"

@@ -44,3 +44,15 @@
   async: 0
 
 
+- name: swap mesos-dns ip source
+  replace:
+    dest: /opt/mesosphere/etc/mesos-dns.json
+    regexp: '"IPSources(.*)$'
+    replace: '"IPSources": ["netinfo", "host"],'
+  when:
+    - dcos_node_type == "master" 
+  notify:
+    - restart mesos-dns
+   
+- name: trigger handlers
+  meta: flush_handlers 

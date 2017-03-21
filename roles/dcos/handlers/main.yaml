@@ -1,0 +1,6 @@
+---
+- name: restart mesos-dns
+  systemd:
+    daemon_reload: yes
+    name: dcos-mesos-dns.service
+    state: restarted
