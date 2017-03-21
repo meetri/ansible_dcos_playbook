@@ -1,21 +1,21 @@
 apiVersion: v1
 kind: policy
 metadata:
-  name: allow-healthchecks
+  name: allow-hostaccess
 spec:
   selector: all()
   ingress:
   - action: allow 
     protocol: tcp
     source:
-      net: 10.20.0.0/16
+      net: {{ dcos_subnet }}
     destination:
       net: 172.16.0.0/16
 
   - action: allow 
     protocol: icmp
     source:
-      net: 10.20.0.0/16
+      net: {{ dcos_subnet }}
     destination:
       net: 172.16.0.0/16
 

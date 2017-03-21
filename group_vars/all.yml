@@ -4,5 +4,6 @@ secrets_dir: /projects/docker_apps/secrets
 
 ansible_user: centos
 ansible_ssh_private_key_file: "{{ secrets_dir  }}/ssh/ztwoikey.pem"
+dcos_subnet: 10.20.0.0/16
 dcos_master1: 10.20.50.30
 nfs_url: 10.20.50.188

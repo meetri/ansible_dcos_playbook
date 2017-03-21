@@ -5,5 +5,6 @@
   become: yes
   become_method: sudo
   roles:
+    - { role: calico-network, when: "dcos_node_type == 'master'"}
     - { role: test, when: mount_snapshot is defined }
 

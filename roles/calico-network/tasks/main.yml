@@ -1,8 +1,12 @@
 ---
-- name: create calico ippools 
-  file:
-    path: /opt/configs/
+- name: create calico config directories
+  file: 
+    path: "{{ item }}"
     state: directory
+  with_items:
+    - /opt/configs/
+    - /opt/configs/policies
+    - /opt/configs/ippools
 
 
 - name: copy calico ippools configurations
@@ -10,10 +14,12 @@
     src: ippools
     dest: /opt/configs/
 
+
 - name: copy calico policies configurations
-  copy: 
-    src: policies
-    dest: /opt/configs/
+  template: 
+    src: policies/hostaccess.yaml
+    dest: /opt/configs/policies/hostaccess.yaml
+
 
 - name: add calico frontend network ip pool
   command: calicoctl apply -f /opt/configs/ippools/frontend.yaml
@@ -23,7 +29,8 @@
   command: calicoctl apply -f /opt/configs/ippools/backend.yaml
 
 
-- name: add calico frontend docker network
+
+- name: add calico backend docker network
   docker_network:
     name: backend
     driver: calico
@@ -41,4 +48,8 @@
     ipam_options:
       subnet: '172.16.110.0/24'
     state: present
+
+
+- name: add calico permission to allow docker hosts to access containers directly 
+  command: calicoctl apply -f /opt/configs/policies/hostaccess.yaml
 
