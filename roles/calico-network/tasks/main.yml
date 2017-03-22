@@ -1,55 +1,43 @@
 ---
 - name: create calico config directories
   file: 
-    path: "{{ item }}"
+    path: /opt/configs/
     state: directory
-  with_items:
-    - /opt/configs/
-    - /opt/configs/policies
-    - /opt/configs/ippools
 
 
-- name: copy calico ippools configurations
+- name: copy calico policies configurations
   copy: 
-    src: ippools
+    src: policy-postgres.yaml
     dest: /opt/configs/
 
 
 - name: copy calico policies configurations
   template: 
-    src: policies/hostaccess.yaml
-    dest: /opt/configs/policies/hostaccess.yaml
+    src: "{{ item }}"
+    dest: /opt/configs/
+  with_items:
+    - policy-hostaccess.yaml
+    - ippool-caliconet.yaml
 
 
 - name: add calico frontend network ip pool
-  command: calicoctl apply -f /opt/configs/ippools/frontend.yaml
+  command: calicoctl apply -f /opt/configs/ippool-caliconet.yaml
 
 
-- name: add calico backend network ip pool
-  command: calicoctl apply -f /opt/configs/ippools/backend.yaml
-
-
-
-- name: add calico backend docker network
+- name: add caliconet docker network
   docker_network:
-    name: backend
+    name: caliconet
     driver: calico
     ipam_driver: calico-ipam
     ipam_options:
-      subnet: '172.16.100.0/24'
-    state: present
-
-
-- name: add calico frontend docker network
-  docker_network:
-    name: frontend
-    driver: calico
-    ipam_driver: calico-ipam
-    ipam_options:
-      subnet: '172.16.110.0/24'
+      subnet: "{{ caliconet_subnet }}"
     state: present
 
 
 - name: add calico permission to allow docker hosts to access containers directly 
-  command: calicoctl apply -f /opt/configs/policies/hostaccess.yaml
+  command: calicoctl apply -f /opt/configs/policy-hostaccess.yaml
+
+
+- name: add calico policy for frontend and database access
+  command: calicoctl apply -f /opt/configs/policy-postgres.yaml
 

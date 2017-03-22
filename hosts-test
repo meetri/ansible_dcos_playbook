@@ -1,0 +1,8 @@
+[dcos-master]
+mesos-node5.ptechtoolz.com
+
+[dcos-public]
+mesos-node6.ptechtoolz.com
+
+[dcos-private]
+mesos-node7.ptechtoolz.com

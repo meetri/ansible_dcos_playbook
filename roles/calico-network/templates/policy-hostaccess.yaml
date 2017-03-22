@@ -10,14 +10,14 @@ spec:
     source:
       net: {{ dcos_subnet }}
     destination:
-      net: 172.16.0.0/16
+      net: {{ caliconet_subnet }}
 
   - action: allow 
     protocol: icmp
     source:
       net: {{ dcos_subnet }}
     destination:
-      net: 172.16.0.0/16
+      net: {{ caliconet_subnet }}
 
   egress:
   - action: allow

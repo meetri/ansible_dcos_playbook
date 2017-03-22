@@ -1,0 +1,21 @@
+---
+- apiVersion: v1
+  kind: policy
+  metadata:
+    name: database-postgresql
+  spec:
+    selector: role == "database" && type == "postgresql" 
+    ingress:
+    - action: allow 
+      protocol: tcp
+      source:
+        selector: role == "frontend"
+      destination:
+        ports: 
+        - 80       # why ???
+        - 5432
+    egress:
+    - action: allow
+      destination:
+        selector: role == "database"
+
